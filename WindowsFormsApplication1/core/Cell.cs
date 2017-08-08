@@ -13,12 +13,12 @@ namespace LifeInForms.core
 		public Cell[] Neighbours { get; set; }
 
 		public Cell() {
-
+			IsAlive = false;
 		}
 
 		public void SetAliveState()
 		{
-			int aliveNeighbours = Neighbours.Count(x => x.IsAlive);
+			int aliveNeighbours = Neighbours.Count(cell => cell != null ? cell.IsAlive : false);
 			if (IsAlive && (aliveNeighbours == 2 || aliveNeighbours == 3))
 			{
 				return;

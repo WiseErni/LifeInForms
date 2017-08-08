@@ -26,5 +26,16 @@ namespace LifeInForms.tests
 			testUnivers = new FixedUniverse(50, 50);
 		}
 		#endregion
+		#region Game update tests
+		[Test]
+		public void isUpdateCorrect() {
+			//Set test cells
+			testUnivers.CellMatrix[1, 1].IsAlive = true;
+			testUnivers.CellMatrix[1, 2].IsAlive = true;
+			testUnivers.CellMatrix[2, 1].IsAlive = true;
+			testUnivers.Update();
+			Assert.IsTrue(testUnivers.CellMatrix[2, 2].IsAlive);
+		}
+		#endregion
 	}
 }

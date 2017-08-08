@@ -8,54 +8,60 @@ namespace LifeInForms.core
 {
 	public class FixedUniverse : GameUniverse
 	{
+		private int width;
+		private int height;
+
 		public FixedUniverse(int x, int y) {
-			UniverseMatrix = new int[x, y];
-			CellMatrix = new Cell[x, y];
-			for (int i = 0; i < x; i++) {
-				for (int j = 0; j < y; j++)
+			width = x;
+			height = y;
+			previousState = new int[width, height];
+			CellMatrix = new Cell[width, height];
+			for (int i = 0; i < width; i++) {
+				for (int j = 0; j < height; j++)
 				{
 					CellMatrix[i, j] = new Cell();
-					CellMatrix[i, j].Neighbours = fetchNeighbors(i, j, x, y);
+					CellMatrix[i, j].Neighbours = fetchNeighbors(i, j);
 				}
 			}
 		}
 
-		private Cell[] fetchNeighbors(int i, int j, int x, int y)
+		private Cell[] fetchNeighbors(int i, int j)
 		{
 			Cell[] neighbors = new Cell[8];
-			if (i >= 0 && j >= 0 && i < x && j < y)
+			if (i >= 0 && j >= 0 && i < width && j < height)
 			{
 				int topShift = j - 1;
 				int downShift = j + 1;
 				int leftShift = i - 1;
 				int rightShift = i + 1;
 
-				if (topShift >= 0 && downShift < y)
+				if (downShift < height && topShift >= 0 && leftShift >= 0 && rightShift < width)
 				{
-					if (leftShift >= 0)
-					{
-						neighbors[0] = CellMatrix[leftShift, topShift] != null ? CellMatrix[leftShift, topShift] : null;
-						neighbors[3] = CellMatrix[leftShift, j] != null ? CellMatrix[leftShift, j] : null;
-						neighbors[5] = CellMatrix[leftShift, downShift] != null ? CellMatrix[leftShift, downShift] : null;
-					}
-					if (rightShift < x)
-					{
-						neighbors[2] = CellMatrix[rightShift, topShift] != null ? CellMatrix[rightShift, topShift] : null;
-						neighbors[4] = CellMatrix[rightShift, j] != null ? CellMatrix[rightShift, j] : null;
-						neighbors[7] = CellMatrix[rightShift, downShift] != null ? CellMatrix[rightShift, downShift] : null;
-					}
-
+					neighbors[0] = CellMatrix[leftShift, topShift] != null ? CellMatrix[leftShift, topShift] : null;
 					neighbors[1] = CellMatrix[i, topShift] != null ? CellMatrix[i, topShift] : null;
+					neighbors[2] = CellMatrix[rightShift, topShift] != null ? CellMatrix[rightShift, topShift] : null;
+					neighbors[3] = CellMatrix[leftShift, j] != null ? CellMatrix[leftShift, j] : null;
+					neighbors[4] = CellMatrix[rightShift, j] != null ? CellMatrix[rightShift, j] : null;
+					neighbors[5] = CellMatrix[leftShift, downShift] != null ? CellMatrix[leftShift, downShift] : null;
 					neighbors[6] = CellMatrix[i, downShift] != null ? CellMatrix[i, downShift] : null;
+					neighbors[7] = CellMatrix[rightShift, downShift] != null ? CellMatrix[rightShift, downShift] : null;
 				}
-
 			}
 			return neighbors;
 		}
 
-		public override void Update()
+		public async override void Update()
 		{
-			base.Update();			
+			for (int i = 0; i < width; i++)
+			{
+				for (int j = 0; j < height; j++)
+				{
+					previousState[i, j] = CellMatrix[i, j].IsAlive ? 1 : 0;
+					CellMatrix[i, j].Neighbours = fetchNeighbors(i, j);
+					CellMatrix[i, j].SetAliveState();
+				} 
+			}
+			await Task.Delay(1000);
 		}
 	}
 }

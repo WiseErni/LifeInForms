@@ -8,7 +8,7 @@ namespace LifeInForms.core
 {
 	public class GameUniverse
 	{
-		public int[,] UniverseMatrix { get; set; }
+		public int[,] previousState { get; set; }
 
 		public Cell[,] CellMatrix { get; set; }
 

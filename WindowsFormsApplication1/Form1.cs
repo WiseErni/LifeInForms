@@ -24,8 +24,7 @@ namespace WindowsFormsApplication1
 		{
 			if (Game == null) {
 				Game = new Game();
-			} else
-			{
+			} else {
 				Game.ChangeState(GameStates.Running);
 			}			
 		}
