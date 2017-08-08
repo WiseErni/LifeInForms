@@ -12,9 +12,9 @@ namespace LifeInForms.core
 
 		public Cell[,] CellMatrix { get; set; }
 
-		public virtual void Update() {
+		public virtual void Update() { }
 
-		}
+		public virtual void CheckCells() { }
 
 		public GameUniverse() {
 

@@ -9,6 +9,8 @@ namespace LifeInForms.core
 	public class Cell
 	{
 		public bool IsAlive { get; set; }
+		public bool NeedUpdate { get; set; }
+		public bool NewState;
 
 		public Cell[] Neighbours { get; set; }
 
@@ -16,19 +18,27 @@ namespace LifeInForms.core
 			IsAlive = false;
 		}
 
-		public void SetAliveState()
+		private int getAliveNeighbors()
 		{
-			int aliveNeighbours = Neighbours.Count(cell => cell != null ? cell.IsAlive : false);
+			return Neighbours.Count(cell => cell != null ? cell.IsAlive : false);
+		}
+
+		public void CheckAliveState()
+		{
+			int aliveNeighbours = getAliveNeighbors();
 			if (IsAlive && (aliveNeighbours == 2 || aliveNeighbours == 3))
 			{
+				NeedUpdate = false;
 				return;
 			}
 			if (!IsAlive && aliveNeighbours == 3)
 			{
-				IsAlive = true;
+				NewState = true;
+				NeedUpdate = true;
 				return;
 			}
-			IsAlive = false;
-		}
+			NewState = false;
+			NeedUpdate = true;
+		}		
 	}
 }

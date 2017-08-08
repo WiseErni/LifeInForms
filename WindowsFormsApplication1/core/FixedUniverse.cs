@@ -50,7 +50,7 @@ namespace LifeInForms.core
 			return neighbors;
 		}
 
-		public async override void Update()
+		public override void Update()
 		{
 			for (int i = 0; i < width; i++)
 			{
@@ -58,10 +58,19 @@ namespace LifeInForms.core
 				{
 					previousState[i, j] = CellMatrix[i, j].IsAlive ? 1 : 0;
 					CellMatrix[i, j].Neighbours = fetchNeighbors(i, j);
-					CellMatrix[i, j].SetAliveState();
+					CellMatrix[i, j].CheckAliveState();				
 				} 
 			}
-			await Task.Delay(1000);
+			for (int i = 0; i < width; i++)
+			{
+				for (int j = 0; j < height; j++)
+				{
+					if (CellMatrix[i, j].NeedUpdate) {
+						CellMatrix[i, j].IsAlive = CellMatrix[i, j].NewState;
+						CellMatrix[i, j].NeedUpdate = false;
+					}
+				}
+			}
 		}
 	}
 }

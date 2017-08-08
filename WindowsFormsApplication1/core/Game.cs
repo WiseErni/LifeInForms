@@ -14,6 +14,9 @@ namespace LifeInForms.core
 
 		public Game() {
 			Universe = new FixedUniverse(50,50);
+			Universe.CellMatrix[0, 0].IsAlive = true;
+			Universe.CellMatrix[1, 0].IsAlive = true;
+			Universe.CellMatrix[2, 0].IsAlive = true;
 			RunGame();
 		}
 
