@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace LifeInForms.core
 {
-	class Cell
+	public class Cell
 	{
 		public bool IsAlive { get; set; }
 
-		public List<Cell> Neighbours { get; set; }
+		public Cell[] Neighbours { get; set; }
 
 		public Cell() {
 

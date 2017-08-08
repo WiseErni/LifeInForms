@@ -22,7 +22,12 @@ namespace WindowsFormsApplication1
 
 		private void StartButton_Click(object sender, EventArgs e)
 		{
-			Game = new Game();
+			if (Game == null) {
+				Game = new Game();
+			} else
+			{
+				Game.ChangeState(GameStates.Running);
+			}			
 		}
 
 		private void PauseButton_Click(object sender, EventArgs e)

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LifeInForms.core
 {
-    class Game
+    public class Game
     {
         public GameStates State { get; set; }
 

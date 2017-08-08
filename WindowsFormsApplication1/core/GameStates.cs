@@ -2,7 +2,7 @@
 
 namespace LifeInForms.core
 {
-	enum GameStates
+	public enum GameStates
 	{
 		[Display(Name = "Игра запущена")]
 		Running,

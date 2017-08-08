@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace LifeInForms.core
 {
-	class GameUniverse
+	public class GameUniverse
 	{
 		public int[,] UniverseMatrix { get; set; }
 
