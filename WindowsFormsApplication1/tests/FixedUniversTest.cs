@@ -60,8 +60,14 @@ namespace LifeInForms.tests
 			testUnivers.CellMatrix[2, 0].IsAlive = true;
 			testUnivers.Update();			
 			Assert.IsTrue(testUnivers.CellMatrix[1, 1].IsAlive);
+			Assert.IsTrue(testUnivers.CellMatrix[1, 0].IsAlive);
+			Assert.IsFalse(testUnivers.CellMatrix[0, 0].IsAlive);
+			Assert.IsFalse(testUnivers.CellMatrix[2, 0].IsAlive);
 			testUnivers.Update();
-			Assert.IsFalse(testUnivers.CellMatrix[1, 0].IsAlive);
+			Assert.IsFalse(testUnivers.CellMatrix[0, 1].IsAlive);
+			Assert.IsFalse(testUnivers.CellMatrix[1, 1].IsAlive);
+			Assert.IsFalse(testUnivers.CellMatrix[0, 0].IsAlive);
+			Assert.IsFalse(testUnivers.CellMatrix[2, 0].IsAlive);
 		}
 		#endregion
 	}

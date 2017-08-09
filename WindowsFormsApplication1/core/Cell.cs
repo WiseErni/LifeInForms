@@ -36,6 +36,10 @@ namespace LifeInForms.core
 				NewState = true;
 				NeedUpdate = true;
 				return;
+			} else if (!IsAlive)
+			{
+				NeedUpdate = false;
+				return;
 			}
 			NewState = false;
 			NeedUpdate = true;

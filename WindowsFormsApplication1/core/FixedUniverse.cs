@@ -20,6 +20,12 @@ namespace LifeInForms.core
 				for (int j = 0; j < height; j++)
 				{
 					CellMatrix[i, j] = new Cell();
+				}
+			}
+			for (int i = 0; i < width; i++)
+			{
+				for (int j = 0; j < height; j++)
+				{
 					CellMatrix[i, j].Neighbours = fetchNeighbors(i, j);
 				}
 			}
@@ -34,17 +40,37 @@ namespace LifeInForms.core
 				int downShift = j + 1;
 				int leftShift = i - 1;
 				int rightShift = i + 1;
-
-				if (downShift < height && topShift >= 0 && leftShift >= 0 && rightShift < width)
+				if (leftShift >= 0)
 				{
-					neighbors[0] = CellMatrix[leftShift, topShift] != null ? CellMatrix[leftShift, topShift] : null;
-					neighbors[1] = CellMatrix[i, topShift] != null ? CellMatrix[i, topShift] : null;
-					neighbors[2] = CellMatrix[rightShift, topShift] != null ? CellMatrix[rightShift, topShift] : null;
 					neighbors[3] = CellMatrix[leftShift, j] != null ? CellMatrix[leftShift, j] : null;
+				}
+				if (rightShift < width)
+				{
 					neighbors[4] = CellMatrix[rightShift, j] != null ? CellMatrix[rightShift, j] : null;
-					neighbors[5] = CellMatrix[leftShift, downShift] != null ? CellMatrix[leftShift, downShift] : null;
+				}
+				if (topShift >= 0)
+				{
+					neighbors[1] = CellMatrix[i, topShift] != null ? CellMatrix[i, topShift] : null;
+					if (leftShift >= 0)
+					{
+						neighbors[0] = CellMatrix[leftShift, topShift] != null ? CellMatrix[leftShift, topShift] : null;
+					}
+					if (rightShift < width)
+					{
+						neighbors[2] = CellMatrix[rightShift, topShift] != null ? CellMatrix[rightShift, topShift] : null;
+					}
+				}
+				if (downShift < height)
+				{
 					neighbors[6] = CellMatrix[i, downShift] != null ? CellMatrix[i, downShift] : null;
-					neighbors[7] = CellMatrix[rightShift, downShift] != null ? CellMatrix[rightShift, downShift] : null;
+					if (leftShift >= 0)
+					{
+						neighbors[5] = CellMatrix[leftShift, downShift] != null ? CellMatrix[leftShift, downShift] : null; 
+					}
+					if (rightShift < width)
+					{
+						neighbors[7] = CellMatrix[rightShift, downShift] != null ? CellMatrix[rightShift, downShift] : null; 
+					}
 				}
 			}
 			return neighbors;
@@ -57,7 +83,6 @@ namespace LifeInForms.core
 				for (int j = 0; j < height; j++)
 				{
 					previousState[i, j] = CellMatrix[i, j].IsAlive ? 1 : 0;
-					CellMatrix[i, j].Neighbours = fetchNeighbors(i, j);
 					CellMatrix[i, j].CheckAliveState();				
 				} 
 			}
