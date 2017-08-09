@@ -19,7 +19,7 @@ namespace LifeInForms.tests
 		}
 		private void instantiateGame()
 		{
-			Game = new Game();
+			//Game = new Game();
 		}
 	}
 }

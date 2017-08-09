@@ -23,7 +23,7 @@ namespace WindowsFormsApplication1
 		private void StartButton_Click(object sender, EventArgs e)
 		{
 			if (Game == null) {
-				Game = new Game();
+				Game = new Game(Controls);
 			} else {
 				Game.ChangeState(GameStates.Running);
 			}			
