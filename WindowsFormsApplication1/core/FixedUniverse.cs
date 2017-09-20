@@ -14,7 +14,7 @@ namespace LifeInForms.core
 		public FixedUniverse(int x, int y) {
 			width = x;
 			height = y;
-			previousState = new int[width, height];
+			previousState = new List<bool[,]>();
 			CellMatrix = new Cell[width, height];
 			for (int i = 0; i < width; i++) {
 				for (int j = 0; j < height; j++)
@@ -76,25 +76,93 @@ namespace LifeInForms.core
 			return neighbors;
 		}
 
-		public override void Update()
+		private bool _CompareTDArrays(bool[,] arrA, bool[,] arrB)
 		{
+			int _width = arrA.GetLength(0);
+			int _height = arrA.GetLength(1);
+			if (arrA.Length != arrB.Length || _width != arrB.GetLength(0) || _height != arrB.GetLength(1))
+			{
+				return false;
+			}			
+			for (var i = 0; i < _width; i++)
+			{
+				for (var j = 0; j < _height; j++)
+				{
+					if (arrA[i, j] != arrB[i, j])
+					{
+						return false;
+					}
+				}
+			}
+			return true;
+		}
+
+		public override bool CheckPreviousStates(bool[,] newState)
+		{
+			if (previousState.Exists(item => { return _CompareTDArrays(newState, item); })) 
+			{
+				return false;
+			}
+			else if (_CompareTDArrays(newState, previousState.Last()))
+			{
+				return false;
+			}
+			else
+			{
+				return true;
+			}			
+		}
+
+		private bool[,] getStateFromCells(Cell[,] cellMatrix)
+		{
+			bool[,] stateArray = new bool[width, height];
 			for (int i = 0; i < width; i++)
 			{
 				for (int j = 0; j < height; j++)
 				{
-					previousState[i, j] = CellMatrix[i, j].IsAlive ? 1 : 0;
+					stateArray[i, j] = CellMatrix[i, j].IsAlive ? true : false;					
+				}
+			}
+			return stateArray;
+		}
+
+		public override bool Update()
+		{
+			// Add the begining state
+			if (previousState.Count == 0)
+			{
+				previousState.Add(getStateFromCells(CellMatrix));
+			}
+			// Checking which cells need to be updated
+			// Doing so without inplace updates to exclude grid corruption
+			for (int i = 0; i < width; i++)
+			{
+				for (int j = 0; j < height; j++)
+				{
 					CellMatrix[i, j].CheckAliveState();				
 				} 
 			}
+			// Update the changed cells
 			for (int i = 0; i < width; i++)
 			{
 				for (int j = 0; j < height; j++)
 				{
-					if (CellMatrix[i, j].NeedUpdate) {
+					if (CellMatrix[i, j].NeedUpdate)
+					{
 						CellMatrix[i, j].IsAlive = CellMatrix[i, j].NewState;
 						CellMatrix[i, j].NeedUpdate = false;
 					}
 				}
+			}
+			
+			if (CheckPreviousStates(getStateFromCells(CellMatrix)))
+			{
+				previousState.Add(getStateFromCells(CellMatrix));
+				return true;
+			}
+			else
+			{
+				return false;
 			}
 		}
 	}

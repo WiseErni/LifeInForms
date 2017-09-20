@@ -95,6 +95,7 @@
 			this.checkBox62 = new System.Windows.Forms.CheckBox();
 			this.checkBox63 = new System.Windows.Forms.CheckBox();
 			this.checkBox64 = new System.Windows.Forms.CheckBox();
+			this.ResetButton = new System.Windows.Forms.Button();
 			this.SuspendLayout();
 			// 
 			// StartButton
@@ -301,7 +302,7 @@
 			// checkBox20
 			// 
 			this.checkBox20.AutoSize = true;
-			this.checkBox20.Location = new System.Drawing.Point(200, 224);
+			this.checkBox20.Location = new System.Drawing.Point(179, 224);
 			this.checkBox20.Name = "checkBox20";
 			this.checkBox20.Size = new System.Drawing.Size(15, 14);
 			this.checkBox20.TabIndex = 3;
@@ -310,7 +311,7 @@
 			// checkBox21
 			// 
 			this.checkBox21.AutoSize = true;
-			this.checkBox21.Location = new System.Drawing.Point(179, 224);
+			this.checkBox21.Location = new System.Drawing.Point(200, 224);
 			this.checkBox21.Name = "checkBox21";
 			this.checkBox21.Size = new System.Drawing.Size(15, 14);
 			this.checkBox21.TabIndex = 3;
@@ -391,6 +392,7 @@
 			// checkBox30
 			// 
 			this.checkBox30.AutoSize = true;
+			this.checkBox30.FlatAppearance.CheckedBackColor = System.Drawing.Color.Black;
 			this.checkBox30.Location = new System.Drawing.Point(221, 244);
 			this.checkBox30.Name = "checkBox30";
 			this.checkBox30.Size = new System.Drawing.Size(15, 14);
@@ -449,7 +451,7 @@
 			this.checkBox36.Name = "checkBox36";
 			this.checkBox36.Size = new System.Drawing.Size(15, 14);
 			this.checkBox36.TabIndex = 3;
-			this.checkBox36.UseVisualStyleBackColor = true;
+			this.checkBox36.UseVisualStyleBackColor = false;
 			// 
 			// checkBox37
 			// 
@@ -703,11 +705,22 @@
 			this.checkBox64.TabIndex = 3;
 			this.checkBox64.UseVisualStyleBackColor = true;
 			// 
+			// ResetButton
+			// 
+			this.ResetButton.Location = new System.Drawing.Point(1122, 133);
+			this.ResetButton.Name = "ResetButton";
+			this.ResetButton.Size = new System.Drawing.Size(75, 23);
+			this.ResetButton.TabIndex = 4;
+			this.ResetButton.Text = "Reset";
+			this.ResetButton.UseVisualStyleBackColor = true;
+			this.ResetButton.Click += new System.EventHandler(this.ResetButton_Click);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1376, 537);
+			this.Controls.Add(this.ResetButton);
 			this.Controls.Add(this.checkBox64);
 			this.Controls.Add(this.checkBox63);
 			this.Controls.Add(this.checkBox56);
@@ -851,6 +864,7 @@
 		private System.Windows.Forms.CheckBox checkBox62;
 		private System.Windows.Forms.CheckBox checkBox63;
 		private System.Windows.Forms.CheckBox checkBox64;
+		private System.Windows.Forms.Button ResetButton;
 	}
 }
 

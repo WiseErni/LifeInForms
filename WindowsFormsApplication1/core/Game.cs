@@ -30,11 +30,6 @@ namespace LifeInForms.core
 
 		public Game(Control.ControlCollection controls) {
 			Universe = new FixedUniverse(8, 8);
-			//Universe.CellMatrix[2, 0].IsAlive = true;
-			//Universe.CellMatrix[2, 1].IsAlive = true;
-			//Universe.CellMatrix[2, 2].IsAlive = true;
-			//Universe.CellMatrix[0, 1].IsAlive = true;
-			//Universe.CellMatrix[1, 2].IsAlive = true;
 			PresentationControls = controls;
 		}
 
@@ -48,11 +43,16 @@ namespace LifeInForms.core
 
 			if (i > 0)
 			{
-				i -= 1;
+				i--;
 			}
-			if (j == 8)
+			else if (i == 0)
 			{
-				j -= 1;
+				i = 7;
+				j--;
+			}
+			if (j == 8 && i != 0)
+			{
+				j--;
 			}
 
 			Universe.CellMatrix[i, j].IsAlive = state;
@@ -77,8 +77,15 @@ namespace LifeInForms.core
 			while (State == GameStates.Running)
 			{
 				drawCells();
-				Universe.Update();
-				await Task.Delay(1000);
+				if (Universe.Update())
+				{
+					await Task.Delay(500);
+				}
+				else
+				{					
+					ChangeState(GameStates.Stopped);
+					MessageBox.Show("There is no more evolution possible.", "Game Over!", MessageBoxButtons.OK);
+				}
 			}
 		}
     }

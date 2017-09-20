@@ -8,11 +8,13 @@ namespace LifeInForms.core
 {
 	public class GameUniverse
 	{
-		public int[,] previousState { get; set; }
+		public List<bool[,]> previousState { get; set; }
 
 		public Cell[,] CellMatrix { get; set; }
 
-		public virtual void Update() { }
+		public virtual bool Update() { return true; }
+
+		public virtual bool CheckPreviousStates(bool[,] newState) { return true; }
 
 		public virtual void CheckCells() { }
 

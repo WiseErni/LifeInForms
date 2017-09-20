@@ -53,8 +53,11 @@ namespace WindowsFormsApplication1
 
 		private void StopButton_Click(object sender, EventArgs e)
 		{
-			Game.ChangeState(GameStates.Stopped);
-			Game = null;
+			if (Game != null)
+			{
+				Game.ChangeState(GameStates.Stopped);
+				Game = null; 
+			}
 		}
 
 		private void checkBoxesClick(object sender, EventArgs e)
@@ -69,7 +72,24 @@ namespace WindowsFormsApplication1
 				if (Game != null)
 				{
 					Game.ChangeCellState(cNum, checkBox.Checked);
-	}
+				}
+			}
+		}
+
+		private void ResetButton_Click(object sender, EventArgs e)
+		{
+			if (Game != null)
+			{
+				Game.ChangeState(GameStates.Stopped);
+				foreach (var control in Controls)
+				{
+					CheckBox cBox = control as CheckBox;
+					if (cBox is CheckBox)
+					{
+						cBox.Checked = false;
+					}
+				}
+				Game = new Game(Controls); 
 			}
 		}
 	}
