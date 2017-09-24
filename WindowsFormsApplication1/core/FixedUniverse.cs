@@ -99,11 +99,11 @@ namespace LifeInForms.core
 
 		public override bool CheckPreviousStates(bool[,] newState)
 		{
-			if (previousState.Exists(item => { return _CompareTDArrays(newState, item); })) 
+			if (_CompareTDArrays(newState, previousState.Last())) 
 			{
 				return false;
 			}
-			else if (_CompareTDArrays(newState, previousState.Last()))
+			else if (previousState.Exists(item => { return _CompareTDArrays(newState, item); }))
 			{
 				return false;
 			}

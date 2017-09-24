@@ -4,13 +4,13 @@ namespace LifeInForms.core
 {
 	public enum GameStates
 	{
-		[Display(Name = "Игра запущена")]
+		[Display(Name = "Game is Running")]
 		Running,
 
-		[Display(Name = "Игра на паузе")]
+		[Display(Name = "Game is Paused")]
 		Paused,
 
-		[Display(Name = "Игра завершена")]
+		[Display(Name = "Game Over")]
 		Stopped
 	}
 }

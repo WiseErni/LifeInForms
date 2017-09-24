@@ -14,6 +14,8 @@ namespace LifeInForms.core
 
 		private Control.ControlCollection presentationControls;
 
+		private int lastState = 0;
+
 		public Control.ControlCollection PresentationControls
 		{
 			get
@@ -62,23 +64,44 @@ namespace LifeInForms.core
 			State = state;
 		}
 
-		private void drawCells() {
-			for (var i = 0; i < 8; i++)
+		private void drawCells(bool useActualState, int prevStateIndex = 0)
+		{
+			if (useActualState)
 			{
-				for (var j = 0; j < 8; j++)
+				for (var i = 0; i < 8; i++)
 				{
-					((CheckBox)PresentationControls["checkBox" + ((j * 8 + i) + 1)]).Checked = Universe.CellMatrix[i, j].IsAlive;
+					for (var j = 0; j < 8; j++)
+					{
+						((CheckBox)PresentationControls["checkBox" + ((j * 8 + i) + 1)]).CheckState = Universe.CellMatrix[i, j].IsAlive ? CheckState.Indeterminate : CheckState.Unchecked;
+					}
+				}
+			}
+			else
+			{
+				for (var i = 0; i < 8; i++)
+				{
+					for (var j = 0; j < 8; j++)
+					{
+						((CheckBox)PresentationControls["checkBox" + ((j * 8 + i) + 1)]).CheckState = Universe.previousState[prevStateIndex][i, j] ? CheckState.Indeterminate : CheckState.Unchecked;
+					}
 				}
 			}
 		}
 
 		public async void RunGame() {
-			ChangeState(GameStates.Running);
+			if (State != GameStates.Paused) {
+				((ListBox)PresentationControls["StateList"]).Items.Clear();
+				((ListBox)PresentationControls["StateList"]).Items.Add("Generation 1");
+				lastState++;
+			}
+			ChangeState(GameStates.Running);						
 			while (State == GameStates.Running)
 			{
-				drawCells();
+				drawCells(true);
 				if (Universe.Update())
 				{
+					((ListBox)PresentationControls["StateList"]).Items.Add("Generation " + Universe.previousState.Count);
+					lastState++;
 					await Task.Delay(500);
 				}
 				else
@@ -86,6 +109,14 @@ namespace LifeInForms.core
 					ChangeState(GameStates.Stopped);
 					MessageBox.Show("There is no more evolution possible.", "Game Over!", MessageBoxButtons.OK);
 				}
+			}
+		}
+
+		public void SelectPreviousState(int stateIndex)
+		{
+			if ( State == GameStates.Paused || State == GameStates.Stopped )
+			{
+				drawCells(false, stateIndex);
 			}
 		}
     }

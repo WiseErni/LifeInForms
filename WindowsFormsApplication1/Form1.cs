@@ -62,13 +62,13 @@ namespace WindowsFormsApplication1
 
 		private void checkBoxesClick(object sender, EventArgs e)
 		{
-			Control control = sender as Control;
+			Control control = sender as CheckBox;
 			string cName = control.Name;
 			int cNum = 0;
-			var _t = cName.IndexOf("checkBox");
-			if (cName.IndexOf("checkBox") >= 0 && Int32.TryParse(cName.Substring(8), out cNum))
+			if (Int32.TryParse(cName.Substring(8), out cNum))
 			{
 				CheckBox checkBox = control as CheckBox;
+				checkBox.CheckState = checkBox.Checked ? CheckState.Indeterminate : CheckState.Unchecked;
 				if (Game != null)
 				{
 					Game.ChangeCellState(cNum, checkBox.Checked);
@@ -81,15 +81,25 @@ namespace WindowsFormsApplication1
 			if (Game != null)
 			{
 				Game.ChangeState(GameStates.Stopped);
-				foreach (var control in Controls)
+			}
+			StateList.Items.Clear();
+			foreach (var control in Controls)
+			{
+				CheckBox cBox = control as CheckBox;
+				if (cBox is CheckBox)
 				{
-					CheckBox cBox = control as CheckBox;
-					if (cBox is CheckBox)
-					{
-						cBox.Checked = false;
-					}
+					cBox.Checked = false;
 				}
-				Game = new Game(Controls); 
+			}
+			Game = new Game(Controls); 
+		}
+
+		private void StateList_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			ListBox list = sender as ListBox;
+			if (Game != null && (Game.State == GameStates.Paused || Game.State == GameStates.Stopped))
+			{
+				Game.SelectPreviousState(list.SelectedIndex);
 			}
 		}
 	}

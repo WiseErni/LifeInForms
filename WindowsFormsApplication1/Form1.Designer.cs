@@ -96,6 +96,7 @@
 			this.checkBox63 = new System.Windows.Forms.CheckBox();
 			this.checkBox64 = new System.Windows.Forms.CheckBox();
 			this.ResetButton = new System.Windows.Forms.Button();
+			this.StateList = new System.Windows.Forms.ListBox();
 			this.SuspendLayout();
 			// 
 			// StartButton
@@ -715,11 +716,21 @@
 			this.ResetButton.UseVisualStyleBackColor = true;
 			this.ResetButton.Click += new System.EventHandler(this.ResetButton_Click);
 			// 
+			// StateList
+			// 
+			this.StateList.FormattingEnabled = true;
+			this.StateList.Location = new System.Drawing.Point(688, 178);
+			this.StateList.Name = "StateList";
+			this.StateList.Size = new System.Drawing.Size(139, 160);
+			this.StateList.TabIndex = 5;
+			this.StateList.SelectedIndexChanged += new System.EventHandler(this.StateList_SelectedIndexChanged);
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1376, 537);
+			this.Controls.Add(this.StateList);
 			this.Controls.Add(this.ResetButton);
 			this.Controls.Add(this.checkBox64);
 			this.Controls.Add(this.checkBox63);
@@ -865,6 +876,7 @@
 		private System.Windows.Forms.CheckBox checkBox63;
 		private System.Windows.Forms.CheckBox checkBox64;
 		private System.Windows.Forms.Button ResetButton;
+		private System.Windows.Forms.ListBox StateList;
 	}
 }
 
