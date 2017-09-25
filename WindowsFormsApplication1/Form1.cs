@@ -42,13 +42,16 @@ namespace WindowsFormsApplication1
 				if (Game.State != GameStates.Stopped)
 				{
 					Game.RunGame();
+					Game.IsNew = false;
 				}
-			}			
+			}
+			ManageButtonsState();
 		}
 
 		private void PauseButton_Click(object sender, EventArgs e)
 		{
 			Game.ChangeState(GameStates.Paused);
+			ManageButtonsState();
 		}
 
 		private void StopButton_Click(object sender, EventArgs e)
@@ -56,18 +59,16 @@ namespace WindowsFormsApplication1
 			if (Game != null)
 			{
 				Game.ChangeState(GameStates.Stopped);
-				Game = null; 
-			}
+				ManageButtonsState();
+			}			
 		}
 
 		private void checkBoxesClick(object sender, EventArgs e)
 		{
-			Control control = sender as CheckBox;
-			string cName = control.Name;
+			CheckBox checkBox = sender as CheckBox;
 			int cNum = 0;
-			if (Int32.TryParse(cName.Substring(8), out cNum))
-			{
-				CheckBox checkBox = control as CheckBox;
+			if (Int32.TryParse(checkBox.Name.Substring(8), out cNum))
+			{				
 				checkBox.CheckState = checkBox.Checked ? CheckState.Indeterminate : CheckState.Unchecked;
 				if (Game != null)
 				{
@@ -76,7 +77,7 @@ namespace WindowsFormsApplication1
 			}
 		}
 
-		private void ResetButton_Click(object sender, EventArgs e)
+		private void RestartButton_Click(object sender, EventArgs e)
 		{
 			if (Game != null)
 			{
@@ -91,7 +92,8 @@ namespace WindowsFormsApplication1
 					cBox.Checked = false;
 				}
 			}
-			Game = new Game(Controls); 
+			Game = new Game(Controls);
+			ManageButtonsState();
 		}
 
 		private void StateList_SelectedIndexChanged(object sender, EventArgs e)
@@ -100,6 +102,17 @@ namespace WindowsFormsApplication1
 			if (Game != null && (Game.State == GameStates.Paused || Game.State == GameStates.Stopped))
 			{
 				Game.SelectPreviousState(list.SelectedIndex);
+			}
+		}
+
+		private void ManageButtonsState()
+		{
+			if (Game != null)
+			{
+				StartButton.Enabled = Game.State == GameStates.Paused;
+				PauseButton.Enabled = Game.State == GameStates.Running;
+				StopButton.Enabled = (Game.State == GameStates.Running || Game.State == GameStates.Paused) && !Game.IsNew;
+				RestartButton.Enabled = Game.State == GameStates.Stopped || Game.State == GameStates.Paused;
 			}
 		}
 	}

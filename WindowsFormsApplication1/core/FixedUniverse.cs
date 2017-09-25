@@ -14,7 +14,7 @@ namespace LifeInForms.core
 		public FixedUniverse(int x, int y) {
 			width = x;
 			height = y;
-			previousState = new List<bool[,]>();
+			PreviousState = new List<bool[,]>();
 			CellMatrix = new Cell[width, height];
 			for (int i = 0; i < width; i++) {
 				for (int j = 0; j < height; j++)
@@ -99,11 +99,11 @@ namespace LifeInForms.core
 
 		public override bool CheckPreviousStates(bool[,] newState)
 		{
-			if (_CompareTDArrays(newState, previousState.Last())) 
+			if (_CompareTDArrays(newState, PreviousState.Last())) 
 			{
 				return false;
 			}
-			else if (previousState.Exists(item => { return _CompareTDArrays(newState, item); }))
+			else if (PreviousState.Exists(item => { return _CompareTDArrays(newState, item); }))
 			{
 				return false;
 			}
@@ -129,9 +129,9 @@ namespace LifeInForms.core
 		public override bool Update()
 		{
 			// Add the begining state
-			if (previousState.Count == 0)
+			if (PreviousState.Count == 0)
 			{
-				previousState.Add(getStateFromCells(CellMatrix));
+				PreviousState.Add(getStateFromCells(CellMatrix));
 			}
 			// Checking which cells need to be updated
 			// Doing so without inplace updates to exclude grid corruption
@@ -157,7 +157,7 @@ namespace LifeInForms.core
 			
 			if (CheckPreviousStates(getStateFromCells(CellMatrix)))
 			{
-				previousState.Add(getStateFromCells(CellMatrix));
+				PreviousState.Add(getStateFromCells(CellMatrix));
 				return true;
 			}
 			else

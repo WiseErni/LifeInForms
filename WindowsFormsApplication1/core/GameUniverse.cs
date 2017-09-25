@@ -8,7 +8,7 @@ namespace LifeInForms.core
 {
 	public class GameUniverse
 	{
-		public List<bool[,]> previousState { get; set; }
+		public List<bool[,]> PreviousState { get; set; }
 
 		public Cell[,] CellMatrix { get; set; }
 

@@ -95,7 +95,7 @@
 			this.checkBox62 = new System.Windows.Forms.CheckBox();
 			this.checkBox63 = new System.Windows.Forms.CheckBox();
 			this.checkBox64 = new System.Windows.Forms.CheckBox();
-			this.ResetButton = new System.Windows.Forms.Button();
+			this.RestartButton = new System.Windows.Forms.Button();
 			this.StateList = new System.Windows.Forms.ListBox();
 			this.SuspendLayout();
 			// 
@@ -111,6 +111,7 @@
 			// 
 			// PauseButton
 			// 
+			this.PauseButton.Enabled = false;
 			this.PauseButton.Location = new System.Drawing.Point(1122, 63);
 			this.PauseButton.Name = "PauseButton";
 			this.PauseButton.Size = new System.Drawing.Size(75, 23);
@@ -121,6 +122,7 @@
 			// 
 			// StopButton
 			// 
+			this.StopButton.Enabled = false;
 			this.StopButton.Location = new System.Drawing.Point(1204, 63);
 			this.StopButton.Name = "StopButton";
 			this.StopButton.Size = new System.Drawing.Size(75, 23);
@@ -706,15 +708,16 @@
 			this.checkBox64.TabIndex = 3;
 			this.checkBox64.UseVisualStyleBackColor = true;
 			// 
-			// ResetButton
+			// RestartButton
 			// 
-			this.ResetButton.Location = new System.Drawing.Point(1122, 133);
-			this.ResetButton.Name = "ResetButton";
-			this.ResetButton.Size = new System.Drawing.Size(75, 23);
-			this.ResetButton.TabIndex = 4;
-			this.ResetButton.Text = "Reset";
-			this.ResetButton.UseVisualStyleBackColor = true;
-			this.ResetButton.Click += new System.EventHandler(this.ResetButton_Click);
+			this.RestartButton.Enabled = false;
+			this.RestartButton.Location = new System.Drawing.Point(1122, 133);
+			this.RestartButton.Name = "RestartButton";
+			this.RestartButton.Size = new System.Drawing.Size(75, 23);
+			this.RestartButton.TabIndex = 4;
+			this.RestartButton.Text = "Restart";
+			this.RestartButton.UseVisualStyleBackColor = true;
+			this.RestartButton.Click += new System.EventHandler(this.RestartButton_Click);
 			// 
 			// StateList
 			// 
@@ -731,7 +734,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(1376, 537);
 			this.Controls.Add(this.StateList);
-			this.Controls.Add(this.ResetButton);
+			this.Controls.Add(this.RestartButton);
 			this.Controls.Add(this.checkBox64);
 			this.Controls.Add(this.checkBox63);
 			this.Controls.Add(this.checkBox56);
@@ -800,7 +803,7 @@
 			this.Controls.Add(this.PauseButton);
 			this.Controls.Add(this.StartButton);
 			this.Name = "Form1";
-			this.Text = "Form1";
+			this.Text = "Life In Forms";
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
@@ -875,7 +878,7 @@
 		private System.Windows.Forms.CheckBox checkBox62;
 		private System.Windows.Forms.CheckBox checkBox63;
 		private System.Windows.Forms.CheckBox checkBox64;
-		private System.Windows.Forms.Button ResetButton;
+		private System.Windows.Forms.Button RestartButton;
 		private System.Windows.Forms.ListBox StateList;
 	}
 }

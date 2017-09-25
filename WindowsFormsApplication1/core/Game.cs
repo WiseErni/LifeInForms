@@ -14,7 +14,9 @@ namespace LifeInForms.core
 
 		private Control.ControlCollection presentationControls;
 
-		private int lastState = 0;
+		private int LastState = 0;
+
+		public bool IsNew;
 
 		public Control.ControlCollection PresentationControls
 		{
@@ -33,6 +35,8 @@ namespace LifeInForms.core
 		public Game(Control.ControlCollection controls) {
 			Universe = new FixedUniverse(8, 8);
 			PresentationControls = controls;
+			State = GameStates.Paused;
+			IsNew = true;
 		}
 
 		public void ChangeCellState(int CellNum, bool state)
@@ -82,17 +86,17 @@ namespace LifeInForms.core
 				{
 					for (var j = 0; j < 8; j++)
 					{
-						((CheckBox)PresentationControls["checkBox" + ((j * 8 + i) + 1)]).CheckState = Universe.previousState[prevStateIndex][i, j] ? CheckState.Indeterminate : CheckState.Unchecked;
+						((CheckBox)PresentationControls["checkBox" + ((j * 8 + i) + 1)]).CheckState = Universe.PreviousState[prevStateIndex][i, j] ? CheckState.Indeterminate : CheckState.Unchecked;
 					}
 				}
 			}
 		}
 
 		public async void RunGame() {
-			if (State != GameStates.Paused) {
-				((ListBox)PresentationControls["StateList"]).Items.Clear();
+			if (IsNew)
+			{
 				((ListBox)PresentationControls["StateList"]).Items.Add("Generation 1");
-				lastState++;
+				LastState++;
 			}
 			ChangeState(GameStates.Running);						
 			while (State == GameStates.Running)
@@ -100,8 +104,8 @@ namespace LifeInForms.core
 				drawCells(true);
 				if (Universe.Update())
 				{
-					((ListBox)PresentationControls["StateList"]).Items.Add("Generation " + Universe.previousState.Count);
-					lastState++;
+					((ListBox)PresentationControls["StateList"]).Items.Add("Generation " + Universe.PreviousState.Count);
+					LastState++;
 					await Task.Delay(500);
 				}
 				else
